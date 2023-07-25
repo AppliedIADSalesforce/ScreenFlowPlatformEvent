@@ -13,6 +13,7 @@ export default class ScreenFlowPlatformEvent extends LightningElement {
     @track flowFinishedBehaviour;
     @track modalHeaderLabel;
     @track isUniqueKeyMatched = false;
+    @track isCurrentUrlMatched = false;
     @track targetUserIds = [];
     @track inputVariables = [];
 
@@ -33,7 +34,7 @@ export default class ScreenFlowPlatformEvent extends LightningElement {
         const messageCallback = function(response) {
             let eventData = response['data']['payload'];
             thisReference.setModalFlowVar(eventData);
-            if((!thisReference.targetUserIds || (thisReference.targetUserIds && thisReference.targetUserIds.includes(thisReference.myId))) && thisReference.isUniqueKeyMatched){
+            if((!thisReference.targetUserIds || (thisReference.targetUserIds && thisReference.targetUserIds.includes(thisReference.myId))) && thisReference.isUniqueKeyMatched && thisReference.isCurrentUrlMatched){
                 thisReference.openModal();
             }
         }
@@ -71,6 +72,7 @@ export default class ScreenFlowPlatformEvent extends LightningElement {
         this.inputVariables = eventData.Input_Variables__c ? JSON.parse(eventData.Input_Variables__c) : null;
         this.isUniqueKeyMatched = eventData.Unique_Key__c == this.uniqueKey ? true : false;
         this.modalHeaderLabel = eventData.Modal_Header_Label__c;
+        this.isCurrentUrlMatched = eventData.Launch_when_current_URL_contains__c ? window.location.href.includes(eventData.Launch_when_current_URL_contains__c) : true;
     }
 
     setTargetUserIds(targetUserIdsInStr){
