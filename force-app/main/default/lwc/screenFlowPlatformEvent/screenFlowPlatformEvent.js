@@ -36,11 +36,12 @@ export default class ScreenFlowPlatformEvent extends LightningElement {
             thisReference.setModalFlowVar(eventData);
             if((!thisReference.targetUserIds || (thisReference.targetUserIds && thisReference.targetUserIds.includes(thisReference.myId))) && thisReference.isUniqueKeyMatched && thisReference.isCurrentUrlMatched){
                 thisReference.openModal();
+                console.log('++++ Subscribed and Open Modal');
             }
         }
 
         subscribe(this.channelName, -1, messageCallback).then(response => {
-            console.log('Subscribed to Screen Flow Event');
+            console.log('++++ Subscribed to Screen Flow Event');
             this.subscription = response;
         });
         onError(error => {
@@ -63,6 +64,7 @@ export default class ScreenFlowPlatformEvent extends LightningElement {
             modalHeaderLabel: this.modalHeaderLabel,
         });
         console.log(result);
+        console.log('++++ Open Modal result');
     }
 
     setModalFlowVar(eventData){
@@ -73,6 +75,7 @@ export default class ScreenFlowPlatformEvent extends LightningElement {
         this.isUniqueKeyMatched = eventData.Unique_Key__c == this.uniqueKey ? true : false;
         this.modalHeaderLabel = eventData.Modal_Header_Label__c;
         this.isCurrentUrlMatched = eventData.Launch_when_current_URL_contains__c ? window.location.href.includes(eventData.Launch_when_current_URL_contains__c) : true;
+        console.log('++++ Setting the modal flow variables');
     }
 
     setTargetUserIds(targetUserIdsInStr){
@@ -86,10 +89,12 @@ export default class ScreenFlowPlatformEvent extends LightningElement {
 
     setFlowFinishBehaviour(isRestartOnFinish){
         if(isRestartOnFinish){
-            return 'RESTART';
+            return 'NONE'; //changed RESTART to not repeat the process and keep the modal open DRW 3/14/24
+            console.log('++++ Flow Finished Behavor set to NONE instead of restart');
         }
         else{
             return 'NONE';
+            console.log('++++ Flow Finished Behavor set to NONE');
         }
     }
 

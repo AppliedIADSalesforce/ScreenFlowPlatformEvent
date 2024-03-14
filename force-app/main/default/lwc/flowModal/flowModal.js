@@ -14,11 +14,12 @@ export default class FlowModal extends LightningModal {
         }
         if(this.flowFinishedBehaviour == 'NONE' && (event.detail.status === 'FINISHED' || event.detail.status === 'FINISHED_SCREEN')){
             this.close('modal closed, flow status is ' + event.detail.status);
+            console.log('++++ If finished then close the modal');
         }
     }
     closeModal() {
         this.close('modal closed manually');
-        console.log('++++ modal closed manually');
+        console.log('++++ Modal closed manually');
       }
 
 }
