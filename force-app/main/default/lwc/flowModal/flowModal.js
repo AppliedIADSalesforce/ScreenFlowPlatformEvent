@@ -18,6 +18,7 @@ export default class FlowModal extends LightningModal {
     }
     closeModal() {
         this.close('modal closed manually');
+        console.log('++++ modal closed manually');
       }
 
 }
