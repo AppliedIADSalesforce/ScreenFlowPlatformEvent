@@ -11,6 +11,7 @@ export default class FlowModal extends LightningModal {
     handleOpenFlow(event){
         if(this.modalHeaderLabel){
             this.isShowHeader = true;
+            console.log('++++ showing the modal header');
         }
         if(this.flowFinishedBehaviour == 'NONE' && (event.detail.status === 'FINISHED' || event.detail.status === 'FINISHED_SCREEN')){
             this.close('modal closed, flow status is ' + event.detail.status);
