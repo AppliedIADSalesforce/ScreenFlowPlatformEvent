@@ -73,9 +73,11 @@ export default class ScreenFlowPlatformEvent extends LightningElement {
         this.targetUserIds = eventData.Target_User_Ids__c ? this.setTargetUserIds(eventData.Target_User_Ids__c) : null;
         this.inputVariables = eventData.Input_Variables__c ? JSON.parse(eventData.Input_Variables__c) : null;
         this.isUniqueKeyMatched = eventData.Unique_Key__c == this.uniqueKey ? true : false;
+        //console.log('++++ Id: ' + eventData.Id);
         this.modalHeaderLabel = eventData.Modal_Header_Label__c;
         this.isCurrentUrlMatched = eventData.Launch_when_current_URL_contains__c ? window.location.href.includes(eventData.Launch_when_current_URL_contains__c) : true;
         console.log('++++ Setting the modal flow variables');
+        
     }
 
     setTargetUserIds(targetUserIdsInStr){
