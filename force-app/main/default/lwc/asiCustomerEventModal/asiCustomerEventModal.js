@@ -1,6 +1,21 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, api } from 'lwc';
+// import { getRecord } from 'lightning/uiRecordApi';
 
 export default class AsiCustomerEventModal extends LightningElement {
+    @api recordId; // This is the Id of the record this component is on (in this case, an Account)
+    
+    get inputVariables() {
+        return [
+          {
+            // Match with the input variable name declared in the flow.
+            name: "recordId",
+            type: "String",
+            // Initial value to send to the flow input.
+            value: this.recordId,
+          },
+        ];
+        }
+    
 
     handleClose() {
         // Close the modal

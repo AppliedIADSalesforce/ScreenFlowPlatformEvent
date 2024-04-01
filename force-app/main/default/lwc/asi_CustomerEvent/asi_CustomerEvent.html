@@ -1,7 +1,5 @@
 <template>
-    {accountField}
-    <!-- <template lwc:if={accountField}> -->
-        <lightning-input label="Field" onchange={handleFieldChange} ></lightning-input>
-        <c-asi-customer-event-modal if:true={isModalOpen} onclose={handleModalClose} onsave={handleModalSave} ></c-asi-customer-event-modal>
-    <!-- </template>  -->
+    {accountField}    
+        <!-- <lightning-input label="Field" onchange={handleFieldChange}></lightning-input> -->
+        <c-asi-customer-event-modal if:true={isModalOpen} record-id={recordId} onclose={handleModalClose} onsave={handleModalSave} ></c-asi-customer-event-modal>
 </template>

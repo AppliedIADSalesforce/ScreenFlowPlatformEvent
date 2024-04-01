@@ -6,7 +6,7 @@ const accountFields = [
 ];
 
 export default class asi_CustomerEvent extends LightningElement {
-@track isModalOpen = false;
+@track isModalOpen = undefined;
 @track accountField;
 @track record;
 
@@ -15,9 +15,19 @@ export default class asi_CustomerEvent extends LightningElement {
 @wire(getRecord, { recordId: '$recordId', fields: accountFields })
 wiredAccount({ error, data }) {
     if (data) {
-        console.log('++++' + data.fields.Trigger_Customer_Event_Screen__c.value);
+        console.log('++++ 1st: ' + data.fields.Trigger_Customer_Event_Screen__c.value + this.recordId);
         this.record = data;
         this.error = undefined;
+
+        console.log('++++ value of isModalOpen ' + this.isModalOpen);
+        if(this.isModalOpen != data.fields.Trigger_Customer_Event_Screen__c.value && this.isModalOpen != undefined){
+                   this.isModalOpen = data.fields.Trigger_Customer_Event_Screen__c.value;
+        }
+        else if (this.isModalOpen == undefined){
+            this.isModalOpen = false;
+        }
+       
+
     } else if (error) {
         console.log('++++' + error);
         this.error = error;
@@ -25,26 +35,24 @@ wiredAccount({ error, data }) {
     }
 }
 
-get accountField() { 
-    if(this.record.data) {
-        console.log('++++' + this.record.data);
-        return this.record.data.fields.Trigger_Customer_Event_Screen__c.value; 
-        
-    }
-    console.log('++++ returning blank');
-    return '';
-}
 
-    handleFieldChange(event) {    
+
+// get accountField() { 
+//     if(this.record.data) {
+//         console.log('++++ 2nd: ' + this.record.data);
+//         return this.record.data.fields.Trigger_Customer_Event_Screen__c.value; 
+        
+//     }
+//     console.log('++++ returning blank');
+//     return '';
+// }
+
+    handleFieldChange() {        
+        // if(this.accountField === true){
+        //     console.log('++++ Value passed to accountField for handleFieldChange: ' + this.accountField);            
         // Open the modal when the field is changed
         this.isModalOpen = true;
-
-        // if(this.accountField){
-        //     console.log('Field value is Yes');
-            
-        
-        // }
-        
+        // }        
     }     
     
 
